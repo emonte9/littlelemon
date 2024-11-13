@@ -13,6 +13,7 @@
 		6705703A2CE45C9800AC863B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 670570392CE45C9800AC863B /* Preview Assets.xcassets */; };
 		6705703C2CE45C9800AC863B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6705703B2CE45C9800AC863B /* Persistence.swift */; };
 		6705703F2CE45C9800AC863B /* littlelemon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6705703D2CE45C9800AC863B /* littlelemon.xcdatamodeld */; };
+		670570462CE460B700AC863B /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670570452CE460B700AC863B /* Restaurant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		670570392CE45C9800AC863B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6705703B2CE45C9800AC863B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6705703E2CE45C9800AC863B /* littlelemon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = littlelemon.xcdatamodel; sourceTree = "<group>"; };
+		670570452CE460B700AC863B /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				6705703B2CE45C9800AC863B /* Persistence.swift */,
 				6705703D2CE45C9800AC863B /* littlelemon.xcdatamodeld */,
 				670570382CE45C9800AC863B /* Preview Content */,
+				670570452CE460B700AC863B /* Restaurant.swift */,
 			);
 			path = littlelemon;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				670570462CE460B700AC863B /* Restaurant.swift in Sources */,
 				6705703C2CE45C9800AC863B /* Persistence.swift in Sources */,
 				6705703F2CE45C9800AC863B /* littlelemon.xcdatamodeld in Sources */,
 				670570352CE45C9600AC863B /* ContentView.swift in Sources */,

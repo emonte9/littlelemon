@@ -9,6 +9,8 @@ import SwiftUI
 
 struct Home: View {
     
+    
+    
     let symbols:[String] = ["list.dash", "square.and.pencil"]
     var body: some View {
         TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
@@ -19,5 +21,5 @@ struct Home: View {
 }
 
 #Preview {
-    Home()
+    Home().environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
 }

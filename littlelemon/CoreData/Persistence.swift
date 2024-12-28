@@ -19,4 +19,14 @@ struct PersistenceController {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         let _ = try? container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
     }
+    
+    static func placeHodler() -> Dish {
+        let dish = Dish(context: PersistenceController.shared.container.viewContext)
+        dish.title = "Greek Salad"
+        dish.descriptionDish = "A refreshing salad made with Greek yogurt, cucumbers, tomatoes, and red onion."
+        dish.image = "https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/greekSalad.jpg?raw=true"
+        dish.price = "10"
+        dish.category = "Salad"
+        return dish
+    }
 }

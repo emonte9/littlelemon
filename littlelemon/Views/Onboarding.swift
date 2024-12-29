@@ -32,6 +32,21 @@ struct Onboarding: View {
         NavigationStack{
             VStack(spacing:30){
                 
+                
+                Spacer()
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit() // Maintain aspect ratio
+                    .frame(maxWidth: 200) // Set a maximum width for the logo
+                
+                ZStack{
+                    hero().frame(maxWidth: .infinity)
+                    
+                }.background(Color(hex: "#495D56") ?? .black).frame(maxWidth: .infinity)
+                    
+                
+                
+                
                 TextField("First name", text: $firstName).padding()
                 TextField("last name", text: $lastName).padding()
                 TextField("email", text: $email).padding()

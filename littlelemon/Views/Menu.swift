@@ -11,47 +11,18 @@ struct Menu: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isDataLoaded = false // Track if data has been loaded
     @State private var searchText = ""
+    
+    @State private var starters = false;
+    @State private var mains = false;
+    @State private var desserts = false;
+    @State private var drinks = false;
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 10) {
-            
-            HStack{
-                Spacer()
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit() // Maintain aspect ratio
-                    .frame(maxWidth: 200) // Set a maximum width for the logo
-                Spacer() // Pushes the logo to the center
-                Image("Profile") // Replace with your actual image name
-                    .resizable() // Make the image resizable
-                    .scaledToFit() // Maintain aspect ratio
-                    .frame(width: 50, height: 50) // Set a fixed size for the profile image
-            }.padding(.horizontal, 30)
-            
-            
+        VStack(alignment: .leading) {
+            header()
             ZStack{
                 VStack{
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text("Little Lemon")
-                                .font(.custom("Markazi Text", size: 30)).bold().padding(.top).foregroundStyle(.yellow).padding(.bottom, 5)
-                            
-                            Text("Chicago")
-                                .font(.custom("Markazi Text", size: 24))
-                                .foregroundStyle(.gray).bold()
-                                .padding(.bottom, 5)
-                            
-                            Text("We are a family owned\n Mediterranean restaurant, focused on traditional recipes served with a modern twist.")
-                                .font(.custom("Markazi Text", size: 16)).foregroundStyle(.gray)
-                        }.padding(.trailing)
-                        
-                        Image("Hero image")
-                            .resizable().scaledToFill()
-                            .frame(width: 100, height: 150)
-                            .cornerRadius(15)
-                        
-                        
-                    }.padding(20)
+                    hero()
                     
                     TextField("Search...", text: $searchText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -61,7 +32,24 @@ struct Menu: View {
             }.background(Color(hex: "#495D56") ?? .black)
                    
                 
+            VStack (alignment: .leading){
+                Text("ORDER FOR DELIVERY")
                 
+                ScrollView(.horizontal, showsIndicators: false){
+                        HStack(){
+                            Toggle("Starters", isOn: $starters).toggleStyle(ButtonToggleStyle())
+                            Toggle("Mains", isOn: $mains)
+                                .toggleStyle(ButtonToggleStyle())
+                            Toggle("Desserts", isOn: $desserts)
+                                .toggleStyle(ButtonToggleStyle())
+                            Toggle("Dinks", isOn: $drinks).toggleStyle(ButtonToggleStyle())
+                            
+                            
+                        }
+                    }
+                    
+                }.padding()
+               
             
             
             FetchedObjects(predicate:buildPredicate() , sortDescriptors: buildSortDescriptors()) { (dishes: [Dish]) in
@@ -71,9 +59,15 @@ struct Menu: View {
                             Image(systemName: dish.image ?? "")
                             
                             HStack {
-                                // Combine title and price
-                                Text("\(dish.title ?? "Unknown Title")  $\(dish.price ?? "N/A")")
                                 
+                                VStack(alignment: .leading){
+                                    // Combine title and price
+                                    Text("\(dish.title ?? "Unknown Title")").bold()
+                                    Text("\(dish.descriptionDish ?? "N/A")")
+                                    Text("$\(dish.price ?? "N/A")")
+                                }
+                                
+                                Spacer()
                                 // AsyncImage for the dish image
                                 AsyncImage(url: URL(string: dish.image ?? "")) { phase in
                                     switch phase {
@@ -116,12 +110,53 @@ struct Menu: View {
 
 
     private func buildPredicate() -> NSPredicate {
-        if searchText.isEmpty {
-           return NSPredicate(value: true) // Return all items if searchText is
-       } else {
-           return NSPredicate(format: "title CONTAINS[cd] %@", searchText) //
-       }
+//        if searchText.isEmpty {
+//           return NSPredicate(value: true) // Return all items if searchText is
+//       } else {
+//           return NSPredicate(format: "title CONTAINS[cd] %@", searchText) //
+//       }
+        
+        
+        let predicate1 = searchText.isEmpty ? NSPredicate(value: true) : NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+        
+        
+        let predicate2 = starters ? NSPredicate(format: "category == %@", "starters") : NSPredicate(value: true)
+        
+        let predicate3 = mains ? NSPredicate(format: "category == %@", "mains") : NSPredicate(value: true)
+        
+        
+        let predicate4 = desserts ? NSPredicate(format: "category == %@", "desserts") : NSPredicate(value: true)
+        
+        
+        let predicate5 = drinks ? NSPredicate(format: "category == %@", "Drinks") : NSPredicate(value: true)
+        
+        
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2, predicate3, predicate4, predicate5])
+        
+        return compoundPredicate
+        
+        
     }
+    
+    
+    
+    struct ButtonToggleStyle: ToggleStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            Button(action: {
+                configuration.isOn.toggle()
+            }) {
+                HStack {
+                    configuration.label // Use the label directly
+                        .foregroundColor(configuration.isOn ? Color(hex: "#495D56") : .yellow)
+                        .padding()
+                        .background(configuration.isOn ? Color.yellow : Color(hex: "#495D56") ?? .black)
+                        .cornerRadius(25)
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
+
 
 }
 
@@ -142,6 +177,9 @@ extension Color {
         self.init(red: red, green: green, blue: blue)
     }
 }
+
+
+
 
 #Preview {
     Menu().environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
